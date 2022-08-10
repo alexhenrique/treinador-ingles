@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <title>Aferidor</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@800&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      text-decoration: none;
+    }
+
+    html {
+
+      --background-botão: #B2AF73;
+      --quadro-escrever: #3B3936;
+      --quadro-botao: #3B3936;
+      --background: #889C9B;
+      --letras: #FCDCBF;
+    }
+
+    html,
+    input,
+    button {
+      font-family: 'Manrope', sans-serif;
+      border: none;
+    }
+
+    body {
+      height: 100vh;
+    }
+
+    .container-app {
+      background-color: var(--background);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .advice-container {
+      padding: 30px;
+      padding-bottom: 10px;
+      width: 800px;
+      background-color: var(--quadro-escrever);
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .conselho-piada {
+      padding: 5px;
+      padding-bottom: 10px;
+      width: 800px;
+      background-color: var(--quadro-botao);
+      border-radius: 10px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #advice,
+    .message {
+      color: var(--letras);
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    #button {
+      width: 150px;
+      height: 30px;
+      border-radius: 5px;
+      background-color: var(--background-botão);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
+    #button:hover {
+      cursor: pointer;
+      box-shadow: 0 0 30px var(--background-botão);
+    }
+
+    #novoConselheBtn {
+      width: 150px;
+      height: 30px;
+      border-radius: 5px;
+      background-color: var(--background-botão);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 10px;
+    }
+
+    #novaPiadaBtn {
+      width: 150px;
+      height: 30px;
+      border-radius: 5px;
+      background-color: var(--background-botão);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 10px;
+    }
+
+    #novoConselheBtn:hover,
+    #novaPiadaBtn:hover {
+      cursor: pointer;
+      box-shadow: 0 0 30px var(--background-botão);
+    }
+
+    .input {
+      font-size: 28px;
+      font-family: inherit;
+      background-color: #aaa;
+      border: 2px solid var(--input-border);
+      border-radius: 3px;
+      size: 10px 300px;
+    }
+
+    textarea.input {
+      resize: none;
+    }
+
+    textarea {
+      font-style: italic;
+      font-variant-caps: titling-caps;
+      font-variant-numeric: normal;
+      font-weight: 900;
+      text-rendering: auto;
+      letter-spacing: normal;
+      word-spacing: normal;
+      line-height: normal;
+      text-transform: none;
+      text-indent: 0px;
+      text-shadow: none;
+      display: inline-block;
+      text-align: start;
+      appearance: auto;
+      -webkit-rtl-ordering: logical;
+      cursor: text;
+      white-space: pre-wrap;
+      overflow-wrap: break-word;
+      margin: 0em;
+      padding: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container-app">
+    <section class="advice-container">
+      <div class="message"></div>
+      <textarea class="input" name="words" id="textarea" cols="40" rows="6" disabled> Esta aplicação tem por objetivo treinar sua escrita no idioma inglês. Clique em 'Novo conselho' ou 'Nova Piada'. Depois clique em 'Escrever'. Escreva aqui o conselho / piada recebido. Não é possivel solicitar novo conselho / piada enquanto está editando.</textarea>
+      <br>
+      <label for="textarea"></label>
+      <button id="button">Escrever</button>
+      <article id="advice">Clique em novo conselho ou piada</article>
+    </section>
+    <section class="conselho-piada">
+      <button id="novoConselheBtn">Novo conselho</button>
+      <button id="novaPiadaBtn">Nova piada</button>
+    </section>
+  </div>
+
+  <div>
+    <script>
+      let mensagem;
+      let startTime, endTime;
+      const adviceElement = document.getElementById('advice')
+      const buttoff = document.getElementById('novoConselheBtn')
+      const buttPiada = document.getElementById('novaPiadaBtn')
+      const buttonMSG = document.querySelector("button");
+      const message = document.querySelector(".message");
+      const playText = document.querySelector("textarea");
+      const updateScreen = (element, text) => {
+        element.innerText = text
+      }
+
+      const handleJoke = async () => {
+        if (buttonMSG.innerText != "Verificar") {
+          const getJoke = async () => {
+            try {
+              const config = {
+                headers: {
+                  Accept: 'application/json',
+                },
+              }
+              const res = await fetch('https://icanhazdadjoke.com', config)
+              const data = await res.json()
+              return data.joke
+
+            } catch (error) {
+              console.log(error)
+            }
+          }
+          mensagem = await getJoke()
+          playText.value = '';
+          updateScreen(adviceElement, mensagem)
+        }
+      }
+
+      const handleAdvice = async () => {
+        if (buttonMSG.innerText != "Verificar") {
+          const getAdviceData = async () => {
+            try {
+              const data = await fetch('https://api.adviceslip.com/advice')
+              const slipAdvice = await data.json()
+              return slipAdvice.slip.advice
+            } catch (error) {
+              console.log(error)
+            }
+          }
+          const advice = await getAdviceData()
+          mensagem = advice;
+          playText.value = '';
+          updateScreen(adviceElement, advice)
+        }
+      }
+      buttoff.addEventListener('click', handleAdvice);
+      buttPiada.addEventListener('click', handleJoke);
+      buttonMSG.addEventListener("click", function () {
+        if (this.innerText == "Escrever") {
+          playText.disabled = false;
+          buttonMSG.innerText = "Verificar";
+          updateScreen(adviceElement, `ocultado`)
+          playGame();
+        }
+        else if (this.innerText == "Verificar") {
+          playText.disabled = true;
+          buttonMSG.innerText = "Escrever";
+          updateScreen(adviceElement, `${mensagem}`)
+          endPlay();
+        }
+      })
+
+      function endPlay() {
+        let str = playText.value;
+        let wordCount = wordCounter(str);
+        let finalMessage = compareWords(mensagem, str);
+        message.innerHTML = finalMessage;
+      }
+
+      function wordCounter(strWords) {
+        let response = strWords.split(" ").length;
+        return response;
+      }
+
+      function compareWords(str1, str2) {
+        let msg = [];
+        let words1 = str1.split(" ");
+        let words2 = str2.split(" ");
+        let cnt = 0;
+        words1.forEach(function (item, index) {
+          if (item == words2[index]) {
+            cnt++;
+          }
+        })
+        if (cnt === words1.length){
+          return ("Parabéns! Todas " + cnt + " palavras estão corretas!" );
+        }
+        return ("Está correta " + cnt + " de " + words1.length + " palavras");
+      }
+
+      function playGame() {
+        let date = new Date();
+        startTime = date.getTime();
+        button.innerText = "Verificar";
+      }     
+    </script>
+</body>
+
+</html>
