@@ -31,15 +31,16 @@
       font-family: 'Manrope', sans-serif;
       border: none;
     }
-
+    
     body {
-      height: 100vh;
+      background-color: var(--background);
     }
 
     .container-app {
-      background-color: var(--background);
-      height: 100%;
+      margin: 0 auto;
+      min-height: 100vh;
       display: flex;
+      max-width: 600px;
       flex-direction: column;
       justify-content: center;
       align-items: center;
@@ -47,8 +48,8 @@
     }
 
     .advice-container {
-      padding: 30px;
-      padding-bottom: 10px;
+      padding: 20px;
+      padding-bottom: 5px;
       width: 90%;
       background-color: var(--quadro-escrever);
       border-radius: 10px;
@@ -60,7 +61,7 @@
 
     .conselho-piada {
       padding: 5px;
-      padding-bottom: 10px;
+      padding-bottom: 5px;
       width: 90%;
       background-color: var(--quadro-botao);
       border-radius: 10px;
@@ -113,7 +114,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      margin: 10px;
+      margin: 5px;
     }
 
     #novoConselheBtn:hover,
@@ -158,6 +159,8 @@
       overflow-wrap: break-word;
       margin: 0em;
       padding: 10px;
+      width: calc(100% - 2rem);
+      border: 2px solid red;
     }
   </style>
 </head>
@@ -166,7 +169,7 @@
   <div class="container-app">
     <section class="advice-container">
       <div class="message"></div>
-      <textarea class="input" name="words" id="textarea" cols="35" rows="7" disabled> Esta aplicação tem por objetivo treinar sua escrita no idioma inglês. Clique em 'Novo conselho' ou 'Nova Piada'. Depois clique em 'Escrever'. Escreva aqui o conselho / piada recebido. Não é possivel solicitar novo conselho / piada enquanto está editando.</textarea>
+      <textarea class="input" name="words" id="textarea"  rows="8" disabled> Esta aplicação tem por objetivo treinar sua escrita no idioma inglês. Clique em 'Novo conselho' ou 'Nova Piada'. Depois clique em 'Escrever'. Escreva aqui o conselho / piada recebido. Não é possivel solicitar novo conselho / piada enquanto está editando.</textarea>
       <br>
       <label for="textarea"></label>
       <button id="button">Escrever</button>
