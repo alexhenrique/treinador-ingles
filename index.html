@@ -49,7 +49,7 @@
     .advice-container {
       padding: 30px;
       padding-bottom: 10px;
-      width: 800px;
+      width: 90%;
       background-color: var(--quadro-escrever);
       border-radius: 10px;
       display: flex;
@@ -61,7 +61,7 @@
     .conselho-piada {
       padding: 5px;
       padding-bottom: 10px;
-      width: 800px;
+      width: 90%;
       background-color: var(--quadro-botao);
       border-radius: 10px;
       display: flex;
@@ -123,16 +123,18 @@
     }
 
     .input {
-      font-size: 28px;
+      font-size: 1.2rem;
       font-family: inherit;
       background-color: #aaa;
       border: 2px solid var(--input-border);
       border-radius: 3px;
       size: 10px 300px;
+      max-width: 100%;
+      border-color: red;
     }
 
     textarea.input {
-      resize: none;
+      resize:both;
     }
 
     textarea {
@@ -164,7 +166,7 @@
   <div class="container-app">
     <section class="advice-container">
       <div class="message"></div>
-      <textarea class="input" name="words" id="textarea" cols="40" rows="6" disabled> Esta aplicação tem por objetivo treinar sua escrita no idioma inglês. Clique em 'Novo conselho' ou 'Nova Piada'. Depois clique em 'Escrever'. Escreva aqui o conselho / piada recebido. Não é possivel solicitar novo conselho / piada enquanto está editando.</textarea>
+      <textarea class="input" name="words" id="textarea" cols="35" rows="7" disabled> Esta aplicação tem por objetivo treinar sua escrita no idioma inglês. Clique em 'Novo conselho' ou 'Nova Piada'. Depois clique em 'Escrever'. Escreva aqui o conselho / piada recebido. Não é possivel solicitar novo conselho / piada enquanto está editando.</textarea>
       <br>
       <label for="textarea"></label>
       <button id="button">Escrever</button>
